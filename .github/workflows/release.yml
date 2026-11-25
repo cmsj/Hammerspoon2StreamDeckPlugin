@@ -1,0 +1,59 @@
+name: Release
+
+# Pushing a version tag (e.g. 0.0.1 or v0.0.1) builds the plugin, packs it with
+# that version, and publishes a GitHub release with the .streamDeckPlugin file.
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+*"
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Work out the plugin version
+        id: version
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          version="${tag#v}"
+          if ! [[ "$version" =~ ^[0-9]+(\.[0-9]+){2,3}$ ]]; then
+            echo "::error::Tag '$tag' isn't a version like 1.2.3 or 1.2.3.4"
+            exit 1
+          fi
+          # Stream Deck wants four parts
+          while [[ "$(tr -cd . <<< "$version" | wc -c)" -lt 3 ]]; do
+            version="$version.0"
+          done
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+
+      - name: Pack
+        run: >
+          npx streamdeck pack org.hammerspoon.hammerspoon2.sdPlugin
+          --output dist --force --no-update-check
+          --version "${{ steps.version.outputs.version }}"
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh release create "$GITHUB_REF_NAME"
+          dist/org.hammerspoon.hammerspoon2.streamDeckPlugin
+          --title "$GITHUB_REF_NAME"
+          --generate-notes
+          --verify-tag

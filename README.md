@@ -44,8 +44,11 @@ The plugin's logs are in `org.hammerspoon.hammerspoon2.sdPlugin/logs/`. Set the 
 setting to `true` to log every message in Hammerspoon's Console.
 
 `npm run validate` checks the manifest, and `npm run pack` builds
-`dist/org.hammerspoon.hammerspoon2.streamDeckPlugin` for release. Change the version in
-`manifest.json` before packing.
+`dist/org.hammerspoon.hammerspoon2.streamDeckPlugin`.
+
+To release, push a version tag such as `0.0.2`. GitHub Actions packs the plugin with that
+version (as `0.0.2.0`, since Stream Deck wants four parts) and publishes it as a GitHub release.
+Keep the `Version` in `manifest.json` in step with the tags.
 
 [PROTOCOL.md](PROTOCOL.md) describes the messages that pass between the plugin and the Spoon.
 If you change it in a way that would break the other side, bump `PROTOCOL_VERSION` in both
