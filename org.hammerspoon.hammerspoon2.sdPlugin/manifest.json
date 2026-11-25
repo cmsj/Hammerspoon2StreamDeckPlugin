@@ -1,0 +1,73 @@
+{
+    "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+    "Name": "Hammerspoon 2",
+    "Version": "0.1.0.0",
+    "Author": "Chris Jones",
+    "Description": "Control keys and dials from your Hammerspoon 2 config: set their images and titles, and react to presses, turns and touches.",
+    "UUID": "org.hammerspoon.hammerspoon2",
+    "Category": "Hammerspoon 2",
+    "CategoryIcon": "imgs/plugin/category-icon",
+    "Icon": "imgs/plugin/marketplace",
+    "CodePath": "bin/plugin.js",
+    "PropertyInspectorPath": "ui/inspector.html",
+    "SDKVersion": 3,
+    "Software": {
+        "MinimumVersion": "7.1"
+    },
+    "OS": [
+        {
+            "Platform": "mac",
+            "MinimumVersion": "13"
+        }
+    ],
+    "Nodejs": {
+        "Version": "24"
+    },
+    "Actions": [
+        {
+            "Name": "Hammerspoon Key",
+            "UUID": "org.hammerspoon.hammerspoon2.key",
+            "Icon": "imgs/actions/key-icon",
+            "Tooltip": "A key controlled by your Hammerspoon 2 config. Give it a name, and use that name in your config.",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "States": [
+                {
+                    "Name": "Off",
+                    "Image": "imgs/actions/key",
+                    "TitleAlignment": "bottom"
+                },
+                {
+                    "Name": "On",
+                    "Image": "imgs/actions/key",
+                    "TitleAlignment": "bottom"
+                }
+            ]
+        },
+        {
+            "Name": "Hammerspoon Dial",
+            "UUID": "org.hammerspoon.hammerspoon2.dial",
+            "Icon": "imgs/actions/dial-icon",
+            "Tooltip": "A dial and touch-strip segment controlled by your Hammerspoon 2 config. Give it a name, and use that name in your config.",
+            "Controllers": [
+                "Encoder"
+            ],
+            "Encoder": {
+                "layout": "$B1",
+                "TriggerDescription": {
+                    "Rotate": "Hammerspoon",
+                    "Push": "Hammerspoon",
+                    "Touch": "Hammerspoon",
+                    "LongTouch": "Hammerspoon"
+                }
+            },
+            "States": [
+                {
+                    "Image": "imgs/actions/key"
+                }
+            ]
+        }
+    ]
+}

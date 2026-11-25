@@ -1,0 +1,30 @@
+{
+  "name": "hammerspoon2-streamdeck-plugin",
+  "private": true,
+  "description": "Stream Deck plugin that connects keys and dials to Hammerspoon 2",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w --watch.onEnd=\"streamdeck restart org.hammerspoon.hammerspoon2\"",
+    "typecheck": "tsc --noEmit",
+    "link": "streamdeck link org.hammerspoon.hammerspoon2.sdPlugin",
+    "validate": "streamdeck validate org.hammerspoon.hammerspoon2.sdPlugin",
+    "pack": "npm run build && streamdeck pack org.hammerspoon.hammerspoon2.sdPlugin --output dist --force"
+  },
+  "devDependencies": {
+    "@elgato/cli": "1.10.4",
+    "@rollup/plugin-commonjs": "29.0.3",
+    "@rollup/plugin-node-resolve": "16.0.3",
+    "@rollup/plugin-terser": "1.0.2",
+    "@rollup/plugin-typescript": "12.3.1",
+    "@tsconfig/node24": "24.0.5",
+    "@types/node": "24.19.2",
+    "rollup": "4.67.3",
+    "tslib": "2.8.1",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@elgato/streamdeck": "3.0.4"
+  },
+  "license": "MIT"
+}
