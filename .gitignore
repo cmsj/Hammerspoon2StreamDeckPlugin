@@ -3,3 +3,4 @@ dist/
 *.sdPlugin/bin/
 *.sdPlugin/logs/
 .DS_Store
+marketplace/build/*.svg
